@@ -86,13 +86,21 @@ class StatsView @JvmOverloads constructor(
             return
         }
 
-        var startAngle = -90F
+        val paintColors = data.mapIndexed{ index, _->
+            colors.getOrElse(index) { generatorRandomColor() }
+        }
+
+        val initialAngle = -90F
+        var startAngle = initialAngle
         data.forEachIndexed { index, datum ->
             val angle = datum / data.sum() * 360F
-            paint.color = colors.getOrElse(index) { generatorRandomColor() }
+            paint.color = paintColors[index]
             canvas.drawArc(oval, startAngle, angle, false, paint)
             startAngle += angle
         }
+        paint.color = paintColors[0]
+        val minSweepAngle = 0.01F
+        canvas.drawArc(oval, initialAngle, minSweepAngle, false, paint)
 
         canvas.drawText(
             "%.2f%%".format(100F),
