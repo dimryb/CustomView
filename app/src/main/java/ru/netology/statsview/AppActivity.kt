@@ -20,25 +20,5 @@ class AppActivity : AppCompatActivity() {
             500F,
         )
 
-        val textView = findViewById<TextView>(R.id.label)
-
-        view.startAnimation(
-            AnimationUtils.loadAnimation(this, R.anim.animation).apply {
-                setAnimationListener(object: Animation.AnimationListener{
-                    override fun onAnimationStart(p0: Animation?) {
-                        textView.text = "onAnimationStart"
-                    }
-
-                    override fun onAnimationEnd(p0: Animation?) {
-                        textView.text = "onAnimationEnd"
-                    }
-
-                    override fun onAnimationRepeat(p0: Animation?) {
-                        textView.text = "onAnimationRepeat"
-                    }
-
-                })
-            }
-        )
     }
 }
