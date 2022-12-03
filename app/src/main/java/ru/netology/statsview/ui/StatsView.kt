@@ -46,13 +46,11 @@ class StatsView @JvmOverloads constructor(
         }
     }
 
-    private val paint = Paint(
-        Paint.ANTI_ALIAS_FLAG
-    ).apply {
-        strokeWidth = lineWidth
+    private val paint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         style = Paint.Style.STROKE
-        strokeJoin = Paint.Join.ROUND
+        strokeWidth = lineWidth
         strokeCap = Paint.Cap.ROUND
+        strokeJoin = Paint.Join.ROUND
     }
 
     private val textPaint = Paint(
@@ -61,6 +59,7 @@ class StatsView @JvmOverloads constructor(
         textSize = fontSize
         style = Paint.Style.FILL
         textAlign = Paint.Align.CENTER
+        textSize = fontSize
     }
 
     var data: List<Float> = emptyList()
@@ -70,7 +69,6 @@ class StatsView @JvmOverloads constructor(
         }
 
     override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
-
         radius = min(w, h) / 2F - lineWidth / 2
         center = PointF(w / 2F, h / 2F)
         oval = RectF(
@@ -95,18 +93,18 @@ class StatsView @JvmOverloads constructor(
         data.forEachIndexed { index, datum ->
             val angle = datum / data.sum() * 360F
             paint.color = paintColors[index]
-            canvas.drawArc(oval, startAngle, angle, false, paint)
+            canvas.drawArc(oval, startAngle + 360F * progress, angle * progress, false, paint)
             startAngle += angle
         }
         paint.color = paintColors[0]
         val minSweepAngle = 0.01F
-        canvas.drawArc(oval, initialAngle, minSweepAngle, false, paint)
+        canvas.drawArc(oval, initialAngle + 360F * progress, minSweepAngle, false, paint)
 
         canvas.drawText(
             "%.2f%%".format(100F),
             center.x,
             center.y + textPaint.textSize / 4,
-            textPaint
+            textPaint,
         )
     }
 
@@ -122,7 +120,7 @@ class StatsView @JvmOverloads constructor(
                 progress = anim.animatedValue as Float
                 invalidate()
             }
-            duration = 500
+            duration = 2000
             interpolator = LinearInterpolator()
         }.also {
             it.start()
