@@ -62,7 +62,12 @@ class StatsView @JvmOverloads constructor(
         textSize = fontSize
     }
 
-    var data: List<Float> = emptyList()
+    var data: List<Float> =  listOf(
+        500F,
+        500F,
+        500F,
+        500F,
+    )
         set(value) {
             field = value
             update()
@@ -93,7 +98,7 @@ class StatsView @JvmOverloads constructor(
         data.forEachIndexed { index, datum ->
             val angle = datum / data.sum() * 360F
             paint.color = paintColors[index]
-            canvas.drawArc(oval, startAngle + 360F * progress, angle * progress, false, paint)
+            canvas.drawArc(oval, startAngle + 360F * progress, angle, false, paint)
             startAngle += angle
         }
         paint.color = paintColors[0]
