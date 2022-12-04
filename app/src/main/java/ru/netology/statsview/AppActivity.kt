@@ -1,10 +1,7 @@
 package ru.netology.statsview
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.animation.Animation
-import android.view.animation.AnimationUtils
-import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import ru.netology.statsview.ui.StatsView
 
 class AppActivity : AppCompatActivity() {
@@ -19,6 +16,5 @@ class AppActivity : AppCompatActivity() {
             500F,
             500F,
         )
-
     }
 }
